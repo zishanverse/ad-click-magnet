@@ -183,8 +183,8 @@ function ClientVideSec() {
                             <video 
                                 ref={(el) => setVideoRef(index, el)}
                                 className={`client-video-card-video ${index % 2 === 1 ? "mt-9" : ""}`}
-                                //poster={each.poster}
-                                preload="metadata"
+                                poster={each.poster}
+                                preload="none"
                                 loop
                                 playsInline
                                 muted={activeVideoIndex !== index}

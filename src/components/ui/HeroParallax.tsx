@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { useEffect } from "react";
 import {
   motion,
   useScroll,
@@ -10,7 +9,6 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import gsap from "gsap";
 
 export const HeroParallax = ({
   
@@ -33,17 +31,7 @@ export const HeroParallax = ({
     target: ref,
     offset: ["start start", "end start"],
   });
-  useEffect(() => {
-    gsap.timeline({
-        scrollTrigger:{
-            trigger: ".text-anime-cont",
-            start: "30% 50%",
-            end: "100% 50%",
-            scrub: 1
-        },
-        
-    })
-})
+
 
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 

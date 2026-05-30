@@ -1,17 +1,27 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@splinetool/runtime': '@splinetool/runtime/build/runtime.js'
+      '@splinetool/runtime': '@splinetool/runtime/build/runtime.js',
+      '@emscripten': path.resolve(__dirname, 'tools/emsdk/upstream/emscripten'),
+    
+    };
+    config.experiments = {
+      asyncWebAssembly: true,
+      layers: true,
     };
 
     // Add Draco loader configuration
     config.module.rules.push({
-      test: /draco_decoder\.wasm$/,
-      type: 'asset/resource',
+      test: /\.wasm$/,
+      type: 'webassembly/async',
     });
+
+    
     
     config.resolve.fallback = {
       ...config.resolve.fallback,

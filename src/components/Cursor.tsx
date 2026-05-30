@@ -8,7 +8,6 @@ export default function Cursor() {
     const [isDesktop, setIsDesktop] = useState(false);
     
     useEffect(() => {
-        let animationFrameId: number;
         const cursor = cursorRef.current;
         
         // Check for desktop once on mount
@@ -17,30 +16,15 @@ export default function Cursor() {
 
         if (!cursor || !isDesktop) return;
 
-        const links = document.querySelectorAll("a");
-        let cursorPosition = { x: 0, y: 0 };
-        let isAnimating = false;
+        // Set up optimized quickTo setters
+        const xTo = gsap.quickTo(cursor, "x", { duration: 0.2, ease: "power2.out" });
+        const yTo = gsap.quickTo(cursor, "y", { duration: 0.2, ease: "power2.out" });
 
-        const animateCursor = () => {
-            if (!isAnimating) return;
-            
-            gsap.to(cursor, {
-                x: cursorPosition.x,
-                y: cursorPosition.y,
-                duration: 0.2,
-                ease: "power2.out"
-            });
-            
-            animationFrameId = requestAnimationFrame(animateCursor);
-        };
+        const links = document.querySelectorAll("a");
 
         const onMouseMove = (e: MouseEvent) => {
-            cursorPosition = { x: e.clientX, y: e.clientY };
-            
-            if (!isAnimating) {
-                isAnimating = true;
-                animationFrameId = requestAnimationFrame(animateCursor);
-            }
+            xTo(e.clientX);
+            yTo(e.clientY);
         };
 
         const onMouseEnterLink = () => {
@@ -72,7 +56,6 @@ export default function Cursor() {
                 link.removeEventListener("mouseenter", onMouseEnterLink);
                 link.removeEventListener("mouseleave", onMouseLeaveLink);
             });
-            cancelAnimationFrame(animationFrameId);
         };
     }, [isDesktop]);
 

@@ -72,7 +72,7 @@ export default function Home() {
   
     return (
       <>
-      {isLoading ?  <PreloaderPage minimumLoadingTime={10000} /> : <main className={`transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+      {isLoading ?  <PreloaderPage minimumLoadingTime={2500} /> : <main className={`transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
         {/* Your main content here */}
         <MobileDevicePopup />
         <Navbar mobileOverlayOpen={toggleMenu} isOpen={isOpen}/>
